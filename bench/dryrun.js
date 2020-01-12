@@ -37,4 +37,36 @@ console.log(color.bold(color.yellow('[warning]')), color.yellow('This is a warni
 console.log(color.bold(color.red('[ERROR]')), color.red('Danger! There was an error!'));
 console.log();
 
-console.log(color.red(`a red ${color.white('white')} red ${color.red('red')} red ${color.gray('gray')} red ${color.red('red')} red ${color.red('red')} red ${color.red('red')} red ${color.red('red')} red ${color.red('red')} red ${color.blue('blue')} red ${color.red('red')} red ${color.red('red')} red ${color.red('red')} red ${color.red('red')}red ${color.red('red')} red ${color.red('red')} red ${color.red('red')} red ${color.red('red')} red ${color.red('red')} red ${color.red('red')} red ${color.red('red')} red ${color.red('red')} red ${color.red('red')} red ${color.red('red')} red ${color.red('red')} red ${color.red('red')} red ${color.red('red')}red ${color.green('green')} red ${color.red('red')} red ${color.red('red')} red ${color.red('red')} red ${color.red('red')} red ${color.red('red')} red ${color.red('red')} red ${color.red('red')} red ${color.red('red')} red ${color.red('red')} red ${color.red('red')} red ${color.magenta('red')} red ${color.red('red')}red ${color.red('red')} red ${color.cyan('cyan')} red ${color.red('red')} red ${color.red('red')} red ${color.yellow('yellow')} red ${color.red('red')} red ${color.red('red')} red ${color.red('red')} red ${color.blue('blue')} red ${color.red('red')} red ${color.red('red')} red ${color.red('red')} red ${color.red('red')} message`).toString());
+console.log(
+  color
+    .red(
+      `a red ${color.white('white')} red ${color.red('red')} red ${color.gray(
+        'gray'
+      )} red ${color.red('red')} red ${color.red('red')} red ${color.red('red')} red ${color.red(
+        'red'
+      )} red ${color.red('red')} red ${color.blue('blue')} red ${color.red('red')} red ${color.red(
+        'red'
+      )} red ${color.red('red')} red ${color.red('red')}red ${color.red('red')} red ${color.red(
+        'red'
+      )} red ${color.red('red')} red ${color.red('red')} red ${color.red('red')} red ${color.red(
+        'red'
+      )} red ${color.red('red')} red ${color.red('red')} red ${color.red('red')} red ${color.red(
+        'red'
+      )} red ${color.red('red')} red ${color.red('red')} red ${color.red('red')}red ${color.green(
+        'green'
+      )} red ${color.red('red')} red ${color.red('red')} red ${color.red('red')} red ${color.red(
+        'red'
+      )} red ${color.red('red')} red ${color.red('red')} red ${color.red('red')} red ${color.red(
+        'red'
+      )} red ${color.red('red')} red ${color.red('red')} red ${color.magenta(
+        'red'
+      )} red ${color.red('red')}red ${color.red('red')} red ${color.cyan('cyan')} red ${color.red(
+        'red'
+      )} red ${color.red('red')} red ${color.yellow('yellow')} red ${color.red(
+        'red'
+      )} red ${color.red('red')} red ${color.red('red')} red ${color.blue('blue')} red ${color.red(
+        'red'
+      )} red ${color.red('red')} red ${color.red('red')} red ${color.red('red')} message`
+    )
+    .toString()
+);

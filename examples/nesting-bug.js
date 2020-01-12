@@ -1,30 +1,22 @@
 console.log();
 
-const { bold, cyan, gray, green, red, dim, check, cross } = require("../");
+const { bold, cyan, gray, green, red, dim, check, cross } = require('../');
 const good = green(check);
 const bad = red(cross);
 
-console.log(bold(`foo ${cyan(dim("bar"))} baz`), good, gray("(ansi-colors)"));
+console.log(bold(`foo ${cyan(dim('bar'))} baz`), good, gray('(ansi-colors)'));
 
-const colorette = require("colorette");
+const colorette = require('colorette');
 console.log(
-  colorette.bold(`foo ${colorette.cyan(colorette.dim("bar"))} baz`),
+  colorette.bold(`foo ${colorette.cyan(colorette.dim('bar'))} baz`),
   bad,
-  gray("(colorette)")
+  gray('(colorette)')
 );
 
-const kleur = require("kleur");
-console.log(
-  kleur.bold(`foo ${kleur.cyan(kleur.dim("bar"))} baz`),
-  bad,
-  gray("(kleur)")
-);
+const kleur = require('kleur');
+console.log(kleur.bold(`foo ${kleur.cyan(kleur.dim('bar'))} baz`), bad, gray('(kleur)'));
 
-const chalk = require("chalk");
-console.log(
-  chalk.bold(`foo ${chalk.cyan.dim("bar")} baz`),
-  bad,
-  gray("(chalk)")
-);
+const chalk = require('chalk');
+console.log(chalk.bold(`foo ${chalk.cyan.dim('bar')} baz`), bad, gray('(chalk)'));
 
 console.log();

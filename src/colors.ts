@@ -3,7 +3,7 @@
 const ANSI_REGEX = /[\u001b\u009b][[\]#;?()]*(?:(?:(?:[^\W_]*;?[^\W_]*)\u0007)|(?:(?:[0-9]{1,4}(;[0-9]{0,4})*)?[~0-9=<>cf-nqrtyA-PRZ]))/g;
 
 export let enabled: boolean;
-enabled = "FORCE_COLOR" in process.env ? process.env.FORCE_COLOR !== "0" : true;
+enabled = 'FORCE_COLOR' in process.env ? process.env.FORCE_COLOR !== '0' : true;
 
 // Explicitly set visible (instead of initializer)
 // to avoid constant removal by rollup
@@ -16,17 +16,17 @@ type ColorCodes = [number, number];
 function defineColor([open_code, close_code]: ColorCodes): Color {
   const open = `\u001b[${open_code}m`;
   const close = `\u001b[${close_code}m`;
-  const regex = new RegExp(`\\u001b\\[${close_code}m`, "g");
+  const regex = new RegExp(`\\u001b\\[${close_code}m`, 'g');
 
   const color: Color = input => {
-    if (!input) return "";
+    if (!input) return '';
     if (enabled === false) return input;
-    if (visible === false) return "";
+    if (visible === false) return '';
 
     if (input.includes(close)) {
       input = input.replace(regex, close + open);
     }
-    if (input.includes("\n")) {
+    if (input.includes('\n')) {
       input = input.replace(/\r*\n/g, `${close}$&${open}`);
     }
 
@@ -84,13 +84,13 @@ export const bgCyanBright = defineColor([106, 49]);
 export const bgWhiteBright = defineColor([107, 49]);
 
 export function stripColor(value: string): string {
-  if (typeof value === "string" && value !== "") {
-    return value.replace(ANSI_REGEX, "");
+  if (typeof value === 'string' && value !== '') {
+    return value.replace(ANSI_REGEX, '');
   }
-  return "";
+  return '';
 }
 
 export function hasColor(value: string): boolean {
   ANSI_REGEX.lastIndex = 0;
-  return typeof value === "string" && value !== "" && ANSI_REGEX.test(value);
+  return typeof value === 'string' && value !== '' && ANSI_REGEX.test(value);
 }
