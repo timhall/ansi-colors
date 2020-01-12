@@ -33,9 +33,7 @@
     "benchmark": "node bench",
     "format": "prettier --write \"{src,bench,examples}/*.{ts,js}\""
   },
-  "dependencies": {
-    "rollup-plugin-dts": "^1.2.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@babel/core": "^7.8.0",
     "@babel/plugin-transform-modules-commonjs": "^7.8.0",
@@ -48,6 +46,7 @@
     "jest": "^24.9.0",
     "prettier": "^1.19.1",
     "rollup": "^1.29.0",
+    "rollup-plugin-dts": "^1.2.0",
     "tslib": "^1.10.0",
     "typescript": "^3.7.4"
   },
