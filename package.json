@@ -52,8 +52,6 @@
     "typescript": "^3.7.4"
   },
   "files": [
-    "index.js",
-    "types/index.d.ts",
     "lib"
   ],
   "prettier": {
