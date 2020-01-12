@@ -33,9 +33,12 @@
     "test": "mocha"
   },
   "devDependencies": {
+    "chalk": "^3.0.0",
+    "colorette": "^1.1.0",
     "decache": "^4.5.1",
     "gulp-format-md": "^2.0.0",
     "justified": "^1.0.1",
+    "kleur": "^3.0.3",
     "mocha": "^6.1.4",
     "rollup": "^1.29.0",
     "rollup-plugin-typescript": "^1.0.1",
