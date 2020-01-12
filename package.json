@@ -1,6 +1,6 @@
 {
   "name": "@timhall/ansi-colors",
-  "version": "4.1.1",
+  "version": "5.0.0-beta.0",
   "license": "MIT",
   "description": "Easily add ANSI colors to your text and symbols in the terminal. A faster drop-in replacement for chalk, kleur and turbocolor (without the dependencies and rendering bugs).",
   "author": "Brian Woodward (https://github.com/doowb)",
