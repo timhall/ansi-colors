@@ -1,177 +1,205 @@
 'use strict';
 
-const isObject = val => val !== null && typeof val === 'object' && !Array.isArray(val);
-const identity = val => val;
+Object.defineProperty(exports, '__esModule', { value: true });
 
 /* eslint-disable no-control-regex */
-// this is a modified version of https://github.com/chalk/ansi-regex (MIT License)
+// this is a modified version of https://github.com/chalk/ansiColor-regex (MIT License)
 const ANSI_REGEX = /[\u001b\u009b][[\]#;?()]*(?:(?:(?:[^\W_]*;?[^\W_]*)\u0007)|(?:(?:[0-9]{1,4}(;[0-9]{0,4})*)?[~0-9=<>cf-nqrtyA-PRZ]))/g;
-
-const create = () => {
-  const colors = { enabled: true, visible: true, styles: {}, keys: {} };
-
-  if ('FORCE_COLOR' in process.env) {
-    colors.enabled = process.env.FORCE_COLOR !== '0';
-  }
-
-  const ansi = style => {
-    let open = style.open = `\u001b[${style.codes[0]}m`;
-    let close = style.close = `\u001b[${style.codes[1]}m`;
-    let regex = style.regex = new RegExp(`\\u001b\\[${style.codes[1]}m`, 'g');
-    style.wrap = (input, newline) => {
-      if (input.includes(close)) input = input.replace(regex, close + open);
-      let output = open + input + close;
-      // see https://github.com/chalk/chalk/pull/92, thanks to the
-      // chalk contributors for this fix. However, we've confirmed that
-      // this issue is also present in Windows terminals
-      return newline ? output.replace(/\r*\n/g, `${close}$&${open}`) : output;
+exports.enabled = "FORCE_COLOR" in process.env ? process.env.FORCE_COLOR !== "0" : true;
+exports.visible = true;
+function defineColor([open_code, close_code]) {
+    const open = `\u001b[${open_code}m`;
+    const close = `\u001b[${close_code}m`;
+    const regex = new RegExp(`\\u001b\\[${close_code}m`, "g");
+    const color = input => {
+        if (!input)
+            return "";
+        if (exports.enabled === false)
+            return input;
+        if (exports.visible === false)
+            return "";
+        if (input.includes(close)) {
+            input = input.replace(regex, close + open);
+        }
+        if (input.includes("\n")) {
+            input = input.replace(/\r*\n/g, `${close}$&${open}`);
+        }
+        return open + input + close;
     };
-    return style;
-  };
-
-  const wrap = (style, input, newline) => {
-    return typeof style === 'function' ? style(input) : style.wrap(input, newline);
-  };
-
-  const style = (input, stack) => {
-    if (input === '' || input == null) return '';
-    if (colors.enabled === false) return input;
-    if (colors.visible === false) return '';
-    let str = '' + input;
-    let nl = str.includes('\n');
-    let n = stack.length;
-    if (n > 0 && stack.includes('unstyle')) {
-      stack = [...new Set(['unstyle', ...stack])].reverse();
+    return color;
+}
+const reset = defineColor([0, 0]);
+const bold = defineColor([1, 22]);
+const dim = defineColor([2, 22]);
+const italic = defineColor([3, 23]);
+const underline = defineColor([4, 24]);
+const inverse = defineColor([7, 27]);
+const hidden = defineColor([8, 28]);
+const strikethrough = defineColor([9, 29]);
+const black = defineColor([30, 39]);
+const red = defineColor([31, 39]);
+const green = defineColor([32, 39]);
+const yellow = defineColor([33, 39]);
+const blue = defineColor([34, 39]);
+const magenta = defineColor([35, 39]);
+const cyan = defineColor([36, 39]);
+const white = defineColor([37, 39]);
+const gray = defineColor([90, 39]);
+const grey = defineColor([90, 39]);
+const bgBlack = defineColor([40, 49]);
+const bgRed = defineColor([41, 49]);
+const bgGreen = defineColor([42, 49]);
+const bgYellow = defineColor([43, 49]);
+const bgBlue = defineColor([44, 49]);
+const bgMagenta = defineColor([45, 49]);
+const bgCyan = defineColor([46, 49]);
+const bgWhite = defineColor([47, 49]);
+const blackBright = defineColor([90, 39]);
+const redBright = defineColor([91, 39]);
+const greenBright = defineColor([92, 39]);
+const yellowBright = defineColor([93, 39]);
+const blueBright = defineColor([94, 39]);
+const magentaBright = defineColor([95, 39]);
+const cyanBright = defineColor([96, 39]);
+const whiteBright = defineColor([97, 39]);
+const bgBlackBright = defineColor([100, 49]);
+const bgRedBright = defineColor([101, 49]);
+const bgGreenBright = defineColor([102, 49]);
+const bgYellowBright = defineColor([103, 49]);
+const bgBlueBright = defineColor([104, 49]);
+const bgMagentaBright = defineColor([105, 49]);
+const bgCyanBright = defineColor([106, 49]);
+const bgWhiteBright = defineColor([107, 49]);
+function stripColor(value) {
+    if (typeof value === "string" && value !== "") {
+        return value.replace(ANSI_REGEX, "");
     }
-    while (n-- > 0) str = wrap(colors.styles[stack[n]], str, nl);
-    return str;
-  };
+    return "";
+}
+function hasColor(value) {
+    ANSI_REGEX.lastIndex = 0;
+    return typeof value === "string" && value !== "" && ANSI_REGEX.test(value);
+}
 
-  const define = (name, codes, type) => {
-    colors.styles[name] = ansi({ name, codes });
-    let keys = colors.keys[type] || (colors.keys[type] = []);
-    keys.push(name);
+const isHyper = process.env.TERM_PROGRAM === "Hyper";
+const isWindows = process.platform === "win32";
+const isLinux = process.platform === "linux";
+const ballotDisabled = "☒";
+const ballotOff = "☐";
+const ballotOn = "☑";
+const bullet = "•";
+const bulletWhite = "◦";
+const fullBlock = "█";
+const heart = "❤";
+const identicalTo = "≡";
+const line = "─";
+const mark = "※";
+const middot = "·";
+const minus = "－";
+const multiplication = "×";
+const obelus = "÷";
+const pencilDownRight = "✎";
+const pencilRight = "✏";
+const pencilUpRight = "✐";
+const percent = "%";
+const pilcrow2 = "❡";
+const pilcrow = "¶";
+const plusMinus = "±";
+const section = "§";
+const starsOff = "☆";
+const starsOn = "★";
+const upDownArrow = "↕";
+const check = isWindows && !isHyper ? "√" : "✔";
+const cross = isWindows && !isHyper ? "×" : "✖";
+const ellipsisLarge = isWindows && !isHyper ? "..." : "⋯";
+const ellipsis = isWindows && !isHyper ? "..." : "…";
+const info = isWindows && !isHyper ? "i" : "ℹ";
+const question = isWindows && !isHyper ? "?" : "?";
+const questionSmall = isWindows && !isHyper ? "?" : "﹖";
+const pointer = isWindows && !isHyper ? ">" : isLinux ? "▸" : "❯";
+const pointerSmall = isWindows && !isHyper ? "»" : isLinux ? "‣" : "›";
+const radioOff = isWindows && !isHyper ? "( )" : "◯";
+const radioOn = isWindows && !isHyper ? "(*)" : "◉";
+const warning = isWindows && !isHyper ? "‼" : "⚠";
 
-    Reflect.defineProperty(colors, name, {
-      configurable: true,
-      enumerable: true,
-      set(value) {
-        colors.alias(name, value);
-      },
-      get() {
-        let color = input => style(input, color.stack);
-        Reflect.setPrototypeOf(color, colors);
-        color.stack = this.stack ? this.stack.concat(name) : [name];
-        return color;
-      }
-    });
-  };
-
-  define('reset', [0, 0], 'modifier');
-  define('bold', [1, 22], 'modifier');
-  define('dim', [2, 22], 'modifier');
-  define('italic', [3, 23], 'modifier');
-  define('underline', [4, 24], 'modifier');
-  define('inverse', [7, 27], 'modifier');
-  define('hidden', [8, 28], 'modifier');
-  define('strikethrough', [9, 29], 'modifier');
-
-  define('black', [30, 39], 'color');
-  define('red', [31, 39], 'color');
-  define('green', [32, 39], 'color');
-  define('yellow', [33, 39], 'color');
-  define('blue', [34, 39], 'color');
-  define('magenta', [35, 39], 'color');
-  define('cyan', [36, 39], 'color');
-  define('white', [37, 39], 'color');
-  define('gray', [90, 39], 'color');
-  define('grey', [90, 39], 'color');
-
-  define('bgBlack', [40, 49], 'bg');
-  define('bgRed', [41, 49], 'bg');
-  define('bgGreen', [42, 49], 'bg');
-  define('bgYellow', [43, 49], 'bg');
-  define('bgBlue', [44, 49], 'bg');
-  define('bgMagenta', [45, 49], 'bg');
-  define('bgCyan', [46, 49], 'bg');
-  define('bgWhite', [47, 49], 'bg');
-
-  define('blackBright', [90, 39], 'bright');
-  define('redBright', [91, 39], 'bright');
-  define('greenBright', [92, 39], 'bright');
-  define('yellowBright', [93, 39], 'bright');
-  define('blueBright', [94, 39], 'bright');
-  define('magentaBright', [95, 39], 'bright');
-  define('cyanBright', [96, 39], 'bright');
-  define('whiteBright', [97, 39], 'bright');
-
-  define('bgBlackBright', [100, 49], 'bgBright');
-  define('bgRedBright', [101, 49], 'bgBright');
-  define('bgGreenBright', [102, 49], 'bgBright');
-  define('bgYellowBright', [103, 49], 'bgBright');
-  define('bgBlueBright', [104, 49], 'bgBright');
-  define('bgMagentaBright', [105, 49], 'bgBright');
-  define('bgCyanBright', [106, 49], 'bgBright');
-  define('bgWhiteBright', [107, 49], 'bgBright');
-
-  colors.ansiRegex = ANSI_REGEX;
-  colors.hasColor = colors.hasAnsi = str => {
-    colors.ansiRegex.lastIndex = 0;
-    return typeof str === 'string' && str !== '' && colors.ansiRegex.test(str);
-  };
-
-  colors.alias = (name, color) => {
-    let fn = typeof color === 'string' ? colors[color] : color;
-
-    if (typeof fn !== 'function') {
-      throw new TypeError('Expected alias to be the name of an existing color (string) or a function');
-    }
-
-    if (!fn.stack) {
-      Reflect.defineProperty(fn, 'name', { value: name });
-      colors.styles[name] = fn;
-      fn.stack = [name];
-    }
-
-    Reflect.defineProperty(colors, name, {
-      configurable: true,
-      enumerable: true,
-      set(value) {
-        colors.alias(name, value);
-      },
-      get() {
-        let color = input => style(input, color.stack);
-        Reflect.setPrototypeOf(color, colors);
-        color.stack = this.stack ? this.stack.concat(fn.stack) : fn.stack;
-        return color;
-      }
-    });
-  };
-
-  colors.theme = custom => {
-    if (!isObject(custom)) throw new TypeError('Expected theme to be an object');
-    for (let name of Object.keys(custom)) {
-      colors.alias(name, custom[name]);
-    }
-    return colors;
-  };
-
-  colors.alias('unstyle', str => {
-    if (typeof str === 'string' && str !== '') {
-      colors.ansiRegex.lastIndex = 0;
-      return str.replace(colors.ansiRegex, '');
-    }
-    return '';
-  });
-
-  colors.alias('noop', str => str);
-  colors.none = colors.clear = colors.noop;
-
-  colors.stripColor = colors.unstyle;
-  colors.symbols = require('./symbols');
-  colors.define = define;
-  return colors;
-};
-
-module.exports = create();
-module.exports.create = create;
+exports.ballotDisabled = ballotDisabled;
+exports.ballotOff = ballotOff;
+exports.ballotOn = ballotOn;
+exports.bgBlack = bgBlack;
+exports.bgBlackBright = bgBlackBright;
+exports.bgBlue = bgBlue;
+exports.bgBlueBright = bgBlueBright;
+exports.bgCyan = bgCyan;
+exports.bgCyanBright = bgCyanBright;
+exports.bgGreen = bgGreen;
+exports.bgGreenBright = bgGreenBright;
+exports.bgMagenta = bgMagenta;
+exports.bgMagentaBright = bgMagentaBright;
+exports.bgRed = bgRed;
+exports.bgRedBright = bgRedBright;
+exports.bgWhite = bgWhite;
+exports.bgWhiteBright = bgWhiteBright;
+exports.bgYellow = bgYellow;
+exports.bgYellowBright = bgYellowBright;
+exports.black = black;
+exports.blackBright = blackBright;
+exports.blue = blue;
+exports.blueBright = blueBright;
+exports.bold = bold;
+exports.bullet = bullet;
+exports.bulletWhite = bulletWhite;
+exports.check = check;
+exports.cross = cross;
+exports.cyan = cyan;
+exports.cyanBright = cyanBright;
+exports.dim = dim;
+exports.ellipsis = ellipsis;
+exports.ellipsisLarge = ellipsisLarge;
+exports.fullBlock = fullBlock;
+exports.gray = gray;
+exports.green = green;
+exports.greenBright = greenBright;
+exports.grey = grey;
+exports.hasColor = hasColor;
+exports.heart = heart;
+exports.hidden = hidden;
+exports.identicalTo = identicalTo;
+exports.info = info;
+exports.inverse = inverse;
+exports.italic = italic;
+exports.line = line;
+exports.magenta = magenta;
+exports.magentaBright = magentaBright;
+exports.mark = mark;
+exports.middot = middot;
+exports.minus = minus;
+exports.multiplication = multiplication;
+exports.obelus = obelus;
+exports.pencilDownRight = pencilDownRight;
+exports.pencilRight = pencilRight;
+exports.pencilUpRight = pencilUpRight;
+exports.percent = percent;
+exports.pilcrow = pilcrow;
+exports.pilcrow2 = pilcrow2;
+exports.plusMinus = plusMinus;
+exports.pointer = pointer;
+exports.pointerSmall = pointerSmall;
+exports.question = question;
+exports.questionSmall = questionSmall;
+exports.radioOff = radioOff;
+exports.radioOn = radioOn;
+exports.red = red;
+exports.redBright = redBright;
+exports.reset = reset;
+exports.section = section;
+exports.starsOff = starsOff;
+exports.starsOn = starsOn;
+exports.strikethrough = strikethrough;
+exports.stripColor = stripColor;
+exports.underline = underline;
+exports.upDownArrow = upDownArrow;
+exports.warning = warning;
+exports.white = white;
+exports.whiteBright = whiteBright;
+exports.yellow = yellow;
+exports.yellowBright = yellowBright;

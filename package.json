@@ -1,5 +1,5 @@
 {
-  "name": "ansi-colors",
+  "name": "@timhall/ansi-colors",
   "description": "Easily add ANSI colors to your text and symbols in the terminal. A faster drop-in replacement for chalk, kleur and turbocolor (without the dependencies and rendering bugs).",
   "version": "4.1.1",
   "homepage": "https://github.com/doowb/ansi-colors",
@@ -8,24 +8,28 @@
     "Brian Woodward (https://twitter.com/doowb)",
     "Jason Schilling (https://sourecode.de)",
     "Jon Schlinkert (http://twitter.com/jonschlinkert)",
-    "Jordan (https://github.com/Silic0nS0ldier)"
+    "Jordan (https://github.com/Silic0nS0ldier)",
+    "Tim Hall <tim.hall.engr@gmail.com>"
   ],
-  "repository": "doowb/ansi-colors",
+  "repository": "timhall/ansi-colors",
   "bugs": {
-    "url": "https://github.com/doowb/ansi-colors/issues"
+    "url": "https://github.com/timhall/ansi-colors/issues"
   },
   "license": "MIT",
   "files": [
     "index.js",
-    "symbols.js",
-    "types/index.d.ts"
+    "types/index.d.ts",
+    "lib"
   ],
   "main": "index.js",
+  "module": "lib/index.es.js",
   "types": "./types/index.d.ts",
   "engines": {
     "node": ">=6"
   },
   "scripts": {
+    "build": "rollup -c",
+    "version": "npm run build",
     "test": "mocha"
   },
   "devDependencies": {
@@ -33,7 +37,11 @@
     "gulp-format-md": "^2.0.0",
     "justified": "^1.0.1",
     "mocha": "^6.1.4",
-    "text-table": "^0.2.0"
+    "rollup": "^1.29.0",
+    "rollup-plugin-typescript": "^1.0.1",
+    "text-table": "^0.2.0",
+    "tslib": "^1.10.0",
+    "typescript": "^3.7.4"
   },
   "keywords": [
     "ansi",
