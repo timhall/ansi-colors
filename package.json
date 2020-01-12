@@ -23,12 +23,9 @@
     "ansi",
     "chalk"
   ],
-  "main": "index.js",
-  "module": "lib/index.es.js",
-  "types": "./types/index.d.ts",
-  "engines": {
-    "node": ">=6"
-  },
+  "main": "lib/ansi-colors.js",
+  "module": "lib/ansi-colors.es.js",
+  "types": "lib/ansi-colors.d.ts",
   "scripts": {
     "build": "rollup -c",
     "version": "npm run build",
@@ -36,7 +33,9 @@
     "benchmark": "node bench",
     "format": "prettier --write \"{src,bench,examples}/*.{ts,js}\""
   },
-  "dependencies": {},
+  "dependencies": {
+    "rollup-plugin-dts": "^1.2.0"
+  },
   "devDependencies": {
     "@rollup/plugin-typescript": "^2.1.0",
     "benchmark": "^2.1.4",
